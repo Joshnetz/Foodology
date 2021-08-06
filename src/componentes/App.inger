@@ -1,0 +1,100 @@
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+<head>
+    <style>   
+
+    @font-face {
+    font-family: "ingercode";
+    src: url("./asset/fonts/CenturyGothic.ttf");
+    }
+
+    .btn-primary
+    {
+    background: #ff9123!important;
+    padding:6px;
+    color:#fff;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    }
+      
+
+    @media (max-width: 518px) {
+
+      
+    }      
+    </style>
+
+    
+</head>
+<body>
+
+<div id="contenedor">
+  <header>
+    <div id="logo">
+    <a><h1>FOODOLOGY</h1></a>
+    </div>
+    <div id="menu">
+      <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link link_inicio" href="javascript:void(0);">Inicio
+            </a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link link_restaurantes" href="javascript:void(0);">Restaurantes
+            </a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link link_contacto" href="javascript:void(0);">Contacto
+            </a>
+          </li>
+      </ul>     
+    </div> 
+    <div id="media">
+       <div id="btnmenu" style="">
+        <a id="navitem"><i class="fas fa-align-justify"></i></a> 
+      </div>
+      <div style="" id="info_media">
+      <a style="font-size: 30px" href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+          <a href="https://api.whatsapp.com/send?phone=573172201210&text=Hola,%20quiero%20conocer%20informaci%C3%B3n%20sobre%20Arrendando" style="font-size: 30px" target="_blank"><i class="fab fa-whatsapp"></i></a>
+          <a style="font-size: 30px" href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+          <br><a>+57 3172201210</a>
+      </div>
+     
+          
+    </div>   
+  </header>
+
+  <div id="contenido">
+
+  </div>
+
+  <div class="" id="widget1">
+    widget 1
+  </div>
+  <div class="" id="widget2">
+    widget 2
+  </div>
+  <div class="" id="widget3">
+    widget 3
+  </div>
+
+  <footer class="" style="color: #fff">
+    <div class="itemfooter">     
+        <p class="">Medellin , Colombia </p>
+    </div>
+    <div class="itemfooter">     
+      <p class=""></p>
+    </div>
+    <div class="itemfooter">     
+      <p class="" style="text-align:right">Proyecto FOODOLOGY - Prueba 2021</p>
+    </div>
+  </footer>
+</div>
+<div style="position: fixed;top: 41%;left: 96%;z-index: 5;background-color: #ccc;width: 51px;">
+  <center>
+<a href="https://queo.com.co/" style="font-size: 36px;color: #000;" target="_blank"><i class="fab fa-whatsapp"></i></a><br>
+<a href="https://queo.com.co/" style="font-size: 36px;color: #000;" target="_blank"><i class="fab fa-facebook"></i></a><br>
+<a href="https://queo.com.co/" style="font-size: 36px;color: #000;" target="_blank"><i class="fab fa-whatsapp"></i></a>
+</center>
+</div>
+
+</body>

@@ -1,0 +1,3 @@
+npm i svelte
+
+npm i -D @babel/core @babel/polyfill @babel/preset-env babel-loader html-webpack-plugin svelte-loader webpack webpack-cli webpack-dev-server

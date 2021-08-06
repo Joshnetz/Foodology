@@ -1,0 +1,5 @@
+<div id="zona_inicio">
+<div style="grid-column: span 2"><center><h2>Creando el grupo de restaurantes virtuales más grande de Latinoamérica</h2></center></div>
+<div><div id="map"></div></div>
+<div id="list_restaurantes"></div>
+</div>
