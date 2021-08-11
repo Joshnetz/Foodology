@@ -126,6 +126,23 @@ footer
 	grid-gap: 10px;
 }
 
+.lEjjo {
+    width: auto;
+    border-radius: 4px;
+    padding: 2px 8px;
+    text-align: center;
+    background-color: rgb(255, 68, 31);
+    color: rgb(255, 255, 255);
+    position: relative;
+    overflow: visible;
+    display: inline-block;
+}
+
+#list_restaurantes
+{
+	    font-size: 12px;
+}
+
 
 @media (max-width: 768px) {
          

@@ -14,6 +14,9 @@ const compression = require('compression');
 const bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
 var morgan = require('morgan');
+const axios = require('axios');
+const cheerio = require('cheerio');
+var cors = require('cors');
 
 
 const csrfProtection = csrf();
@@ -57,10 +60,51 @@ app.use(session({
 
 //app.use(csrfProtection);
 
-app.use(express.static('public'));
+app.use(express.static('dist'));
 app.set('views', 'Views');
 app.set('view engine', 'ejs');
 
+//Fucniones 
+
+const restaurantes_rappi = async (id) => {
+         
+        const rest=await axios.get('https://www.rappi.com.co/restaurantes/'+id);
+        let $che = cheerio.load(rest.data);
+        let nombre=$che('#restaurantLayoutContainer .iXmFNO span:first-child').text();
+        let mensaje=$che('#restaurantLayoutContainer .STYOD .ieiAva').html();
+        let direccion=$che('#restaurantLayoutContainer .STYOD .kzUGaC').html();
+       
+       return {estado : true ,"nombre" : nombre , "direccion" : direccion , "mensaje" : mensaje};
+        
+        /*  .then(response => {
+
+            let $che = cheerio.load(response.data);
+            let nombre=$che('#restaurantLayoutContainer .iXmFNO span:first-child').text();
+            let mensaje=$che('#restaurantLayoutContainer .STYOD .ieiAva').html();
+            let direccion=$che('#restaurantLayoutContainer .STYOD .kzUGaC').html();
+           
+           return {estado : true ,"nombre" : nombre , "direccion" : direccion , "mensaje" : mensaje};
+            //console.log(dataarray[x]);
+          })
+          .catch(error => {
+            //console.log(error);
+            return {estado :false};
+          });*/
+
+    /*try
+    {
+        const resp = await axios.get('https://www.rappi.com.co/restaurantes/'+id);      
+        let $che = cheerio.load(resp.data);
+        let nombre=$che('#restaurantLayoutContainer .iXmFNO span:first-child').text();
+        let mensaje=$che('#restaurantLayoutContainer .STYOD .ieiAva').html();
+        let direccion=$che('#restaurantLayoutContainer .STYOD .kzUGaC').html();
+        return {estado : false,"nombre" : nombre , "direccion" : direccion , "mensaje" : mensaje};
+
+    } catch (err) {
+        // Handle Error Here
+        return {estado : false , data:"Error"};
+    }*/
+};
 
 // Middleware ----
 
@@ -70,8 +114,11 @@ app.set('view engine', 'ejs');
 
 
 //Router basicos ------------------------------
+app.get('/' , function(req, res) { 
+    res.json({res: "ok", data : "Hola"});
+});
 
-app.get('token',  function(req, res) { 
+app.get('/token',  function(req, res) { 
     
     var options = {
         'method': 'POST',
@@ -113,38 +160,35 @@ app.get('token',  function(req, res) {
 
 
 //Realiza la peticón a la api de Rapi para devolver los restaurantes que estan en la plataforma
-app.get('/listar_restaurantes' , function(req, res) { 
+app.get('/listar_restaurantes' , function(req, res) {
+    var id=req.query.restaurante;
+    console.log(req.query.restaurante);
+    if(id){
+
+         axios.get('https://www.rappi.com.co/restaurantes/'+id)
+         .then(response => {
+
+            let $che = cheerio.load(response.data);
+            let nombre=$che('#restaurantLayoutContainer .iXmFNO span:first-child').text();
+            let mensaje=$che('#restaurantLayoutContainer .STYOD .ieiAva').html();
+            let direccion=$che('#restaurantLayoutContainer .STYOD .kzUGaC').html();
+           
+            result= {estado : true ,"nombre" : nombre , "direccion" : direccion , "mensaje" : mensaje};
+            res.json(result); 
+            //console.log(dataarray[x]);
+          })
+          .catch(error => {
+            //console.log(error);
+            res.json({estado :false});
+          });
+
+        //let result=restaurantes_rappi(id);
+
+       
+    }else{
+        res.json({estado:false,data:"Error"});
+    }
     
-    var token=req.params.token;
-    var options = {
-        'method': 'GET',
-        'hostname': 'microservices.dev.rappi.com',
-        'path': '/api/v2/restaurants-integrations-public-api/stores-pa',
-        'headers': {
-            'Content-Type': 'application/json',
-            'x-authorization': token
-        }
-    };
-
-    var reqdata = https.request(options, function (res) {
-        var chunks = [];
-
-        res.on("data", function (chunk) {
-            chunks.push(chunk);
-        });
-
-        res.on("end", function (chunk) {
-            var body = Buffer.concat(chunks);
-            console.log(body.toString());
-        });
-
-        res.on("error", function (error) {
-            console.error(error);
-        });
-    });
-
-    reqdata.end();
-
 });
 
 
@@ -172,6 +216,6 @@ io.on('connection', function(socket) {
 });
 
 
-server.listen(9207, function() {
-  console.log("Servidor corriendo en https:localhost:9207");
+server.listen(3001, function() {
+  console.log("Servidor corriendo en https:localhost:3001");
 });

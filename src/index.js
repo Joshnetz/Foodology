@@ -3,6 +3,7 @@ import "jquery-migrate";
 import "popper.js";
 import wNumb from "wnumb";
 import QRCode from "qrcode";
+const axios = require('axios');
 import "./ingercodebase.css";
 import {Loader, LoaderOptions} from 'google-maps';
 import "./asset/fonts/CenturyGothic.ttf";
@@ -11,7 +12,7 @@ import "./asset/img/fondoinicio.png";
 
 //--- Variables con dependencia golbales
 
-window.baseurl="localhot";
+window.baseurl="localhost";
 
 //---- Import Controladores
 import Restaurantes_c from './controladores/Restaurantes.js';
@@ -112,41 +113,32 @@ function link_inicio(){
 
   });
 
-  //Restaurantes manual
-  let restaurantes=["Brunch&Munch","Avocalia","Bottaniko","La cuadra","Cacerola","Burritos","Amor Perfecto","Mia Pizza"];
+  let restaurantes=[900042119,900042109,900095952,900042123,900042113,900054051];
+
   restaurantes.map(function(x) {
-         $("#list_restaurantes").append("<div>"+x+"</div>");
-  });
 
-  let urlapidev=window.baseurl+":9207/listar_restaurantes";
-  fetch(urlapidev,{
-    method: 'GET',
-  })
-  .then(response => {console.log(response);response.json();})
-  .then(data => {
+     axios.get('/listar_restaurantes?restaurante='+x)
+      .then(response => {   
+        console.log(response.data);
+
+        let datosres=response.data;
+        if(!datosres.estado){
+          alert("Error");
+        }else{
+
+          $("#list_restaurantes").append("<div>"+datosres.nombre+" - "+datosres.direccion+"<br>"+datosres.mensaje+"</div><hr>");
+
+        }
+                   
+           
       
-      data.map(function(x) {
-         $("#list_restaurantes").append(x.name);
+      })
+      .catch(error => {
+        console.log(error);
       });
-            
+
   });
-
-  
-
-  $( ".formatprecio" ).each(function( index ) {
-      var valor=$(this).text();
-      var Format = wNumb({
-          decimals: 0,
-          thousand: '.',
-          prefix: '$'
-      });
-      
-      valor=Format.to( parseFloat(valor) );
-      $(this).text(valor);
-      
-  });
-
-
+ 
 }
 
 
